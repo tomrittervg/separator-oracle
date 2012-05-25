@@ -1,0 +1,52 @@
+===============================================================================
+README
+===============================================================================
+
+This is a demonstration of the 'Separator Oracle' attack Jon Passki and I authored.
+The paper is also included.
+
+webserver.py
+    This is a tornado-based webserver that exposes CFB, CTR, CBC, and OFB 
+    encryption, as well as a simple 'User/Admin' session detector for 
+    demonstrating plaintext manipulation.
+    
+    It runs on port 9999.
+    
+    Note that for CFB mode, your ciphertext must be a multiple of the 
+    SEGMENT_SIZE, which is a variable at the top.  You may also need to change
+    EXPECTED_DELIMITERS depending on your plaintext.
+    
+    The Nonce, Initialization Vector, and Key are all hardcoded. You can change 
+    them, but then you have to encode the Nonce of IV with the ciphertext...
+    and that's just more work.
+
+    Finally, EXTRA_DELIMITERS_OKAY = True will _not_ throw an exception if 
+    having extra delimiters (e.g. Tom|User|||||||) is acceptable.  Most testing
+    was done with this off, so be aware of that when turning it to True.
+    
+cbc-oneblock.py
+cfb-multiblock.py
+cfb-oneblock.py
+cfb-singlebytesegmentsize.py
+ctrattack.py
+ofbattack.py
+    These demonstrate the decryption phase for different modes under different 
+    constraints.  
+    
+    Not every mode works perfectly - for example cfb-multiblock does not include
+    an optimization that could decrypt more bytes.  Feel free to do it as an 
+    exercise.  CBC mode is as complicated as CFB mode, and therefore the only 
+    example is attack a single block by manipulating the Initialization Vector.
+    
+    These files must be edited to point to the correct server - search for 
+    YOURWEBSERVER.COM
+    
+chosenplaintext.py
+    This file will take some ciphertext that contains Tom|User, decrypt it,
+    then create ciphertext that will decrypt to To|Admin
+    
+
+All of these examples work against delimited plaintext, because it's the easiest
+and most common.  But the idea is more general, and could be used to attack any 
+structured plaintext you can derive some data from.  Unicode conversions, ASN
+decoding, and timestamps are some other ideas we had.
