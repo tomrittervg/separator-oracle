@@ -50,3 +50,9 @@ All of these examples work against delimited plaintext, because it's the easiest
 and most common.  But the idea is more general, and could be used to attack any 
 structured plaintext you can derive some data from.  Unicode conversions, ASN
 decoding, and timestamps are some other ideas we had.
+
+LINKS
+===============================================================================
+http://www.isecpartners.com/blog/2012/5/25/tom-ritters-adaptive-ciphertext-attack-whitepaper-released.html
+https://www.aspectsecurity.com/blog/separator-oracle-2/
+http://ritter.vg/blog-separator_oracle.html
